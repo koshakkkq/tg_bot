@@ -1,0 +1,10 @@
+ERROR	2022/07/14 02:05:43 rooms.go:128: Bad Request: message text is empty
+ERROR	2022/07/14 02:06:15 rooms.go:73: Bad Request: message text is empty
+ERROR	2022/07/14 02:10:56 rooms.go:128: Bad Request: message text is empty
+ERROR	2022/07/14 02:11:38 rooms.go:128: Bad Request: message text is empty
+ERROR	2022/07/14 02:14:38 rooms.go:128: Bad Request: message text is empty
+ERROR	2022/07/15 02:08:05 main.go:127: Forbidden: bot was blocked by the user
+ERROR	2022/07/15 02:08:05 main.go:127: Forbidden: bot was blocked by the user
+ERROR	2022/07/15 02:11:24 rooms.go:73: Bad Request: message text is empty
+ERROR	2022/07/15 02:11:35 rooms.go:73: Bad Request: message text is empty
+ERROR	2022/07/15 02:20:43 rooms.go:128: Bad Request: message text is empty
