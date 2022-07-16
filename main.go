@@ -26,7 +26,7 @@ func main() { // db.whitelist.createIndex({"name":1}, {"unique":true})
 
 	admin_st := create_admin()
 
-	bot.Debug = true
+	bot.Debug = false
 
 	fmt.Println("Authorized on account " + bot.Self.UserName)
 
@@ -48,7 +48,11 @@ func main() { // db.whitelist.createIndex({"name":1}, {"unique":true})
 			}
 			continue
 		}
-
+		if update.Message.Text == "/reload" {
+			admin_st.Admins_status[update.Message.From.ID] = []int64{}
+			users_status[update.Message.From.ID] = []int64{}
+			continue
+		}
 		name := get_username(update.Message.From)
 
 		user, err := check_user(name, update.Message.From.ID)
