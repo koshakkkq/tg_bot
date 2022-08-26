@@ -60,7 +60,7 @@ func create_new_user(Id int64, name string) (*user_struct, error) {
 		Id:       Id,
 		Name:     name,
 		Refs:     []string{},
-		Balance:  10,
+		Balance:  80,
 		Admin:    false,
 		Refs_was: []string{},
 		Room:     "empty",

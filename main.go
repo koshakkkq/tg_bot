@@ -14,7 +14,7 @@ func main() { // db.whitelist.createIndex({"name":1}, {"unique":true})
 	open_log_file()
 	load_keybords()
 	config := open_config()
-	super_admin_id = 447696040
+	super_admin_id = config.Id
 
 	users_status = make(map[int64][]int64)
 	admins_status = make(map[int64][]int64)
@@ -32,8 +32,9 @@ func main() { // db.whitelist.createIndex({"name":1}, {"unique":true})
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
-
 	updates := bot.GetUpdatesChan(u)
+
+	go mailing()
 	for update := range updates {
 		if update.Message == nil { // ignore non-Message updates
 			continue
@@ -136,10 +137,9 @@ func main() { // db.whitelist.createIndex({"name":1}, {"unique":true})
 				}
 				continue
 			} else {
-				user_proceed(&update)
+				go user_proceed(&update)
 			}
 		}
 	}
 
-} //  k0shakq
-// Todo закрыть бота, разные ранги админов, команаты
+} //TODO: исправить отправку пользовательей в команте

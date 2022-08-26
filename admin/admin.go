@@ -106,6 +106,7 @@ type user_tmpl struct {
 	Refs_aded int
 	Balance   int64
 	Admin     bool
+	Room      string
 }
 
 func (main *Admin) get_stat(update *tgbotapi.Update, admin bool) {
@@ -133,11 +134,13 @@ func (main *Admin) get_stat(update *tgbotapi.Update, admin bool) {
 			Id:        user.Id,
 			Refs_open: len(user.Refs_was) - len(user.Refs),
 			Refs_aded: len(user.Refs),
+			Room:      user.Room,
 		}
 		tmpl, err := template.New("data").Parse("<a href='tg://user?id={{.Id}}'>{{.Name}}</a>\n" +
 			"            Добавленно ссылок: {{.Refs_aded}}\n" +
 			"            Запрошено ссылко: {{.Refs_open}}\n" +
-			"            Баланс: {{.Balance}}\n")
+			"            Баланс: {{.Balance}}\n" +
+			"            Комната: {{.Room}}\n")
 		if err != nil {
 			main.proceed_err(update, err)
 			return

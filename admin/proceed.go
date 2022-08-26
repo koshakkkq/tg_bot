@@ -289,6 +289,8 @@ func (main *Admin) proceed_rooms(update *tgbotapi.Update) {
 			}
 			main.Admins_status[id][3] = 2
 			return
+		case "Все комнаты":
+			main.get_all_rooms(update)
 		}
 	case 2: // Ожидание Имени комнаты
 		switch update.Message.Text {
@@ -315,6 +317,16 @@ func (main *Admin) proceed_rooms(update *tgbotapi.Update) {
 			}
 			main.Admins_status[id][3] = 4
 			return
+		case "Рассылка":
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Введите текст расслыки")
+			msg.ReplyMarkup = main.Admin_keybords["back"]
+			if _, err := main.Bot.Send(msg); err != nil {
+				main.Admins_status[id] = []int64{}
+				main.ErrorLog.Println(err)
+				return
+			}
+			main.Admins_status[id][3] = 5
+			return
 		case "Получить ссылки":
 			main.get_ref_by_room(update)
 			return
@@ -329,6 +341,15 @@ func (main *Admin) proceed_rooms(update *tgbotapi.Update) {
 			return
 		default:
 			main.add_users(update)
+			return
+		}
+	case 5:
+		switch update.Message.Text { //Ждём текст расслыки
+		case "Назад":
+			main.return_to_rooms_page(update)
+			return
+		default:
+			main.create_mailing(update)
 			return
 		}
 	}

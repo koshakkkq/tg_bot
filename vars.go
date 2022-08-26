@@ -15,6 +15,7 @@ var db_refs *mongo.Collection
 var db_users *mongo.Collection
 var db_whitelist *mongo.Collection
 var db_waiting *mongo.Collection
+var db_mailing *mongo.Collection
 
 var users_status map[int64][]int64
 var admins_status map[int64][]int64

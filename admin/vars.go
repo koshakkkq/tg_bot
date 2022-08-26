@@ -13,6 +13,7 @@ type Admin struct {
 	Db_refs        *mongo.Collection
 	Db_whitelist   *mongo.Collection
 	Db_waiting     *mongo.Collection
+	Db_mailing     *mongo.Collection
 	ErrorLog       *log.Logger
 	Bot            *tgbotapi.BotAPI
 	Cur_room       map[int64]string
@@ -35,4 +36,9 @@ type user_struct struct {
 	Admin    bool
 	Refs_was []string
 	Room     string
+}
+
+type mailing_struct struct {
+	Id   int64
+	Text string
 }

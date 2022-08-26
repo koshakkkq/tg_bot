@@ -74,6 +74,7 @@ func (main *Admin) Load_Admin_keybords() {
 	main.Admin_keybords["rooms"] = tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("Управление"),
+			tgbotapi.NewKeyboardButton("Все комнаты"),
 		),
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("Назад"),
@@ -82,6 +83,7 @@ func (main *Admin) Load_Admin_keybords() {
 	main.Admin_keybords["room_page"] = tgbotapi.NewReplyKeyboard(
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("Добавть пользователей"),
+			tgbotapi.NewKeyboardButton("Рассылка"),
 		),
 		tgbotapi.NewKeyboardButtonRow(
 			tgbotapi.NewKeyboardButton("Получить ники пользователей"),

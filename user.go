@@ -4,9 +4,12 @@ import (
 	"context"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"html/template"
+	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func user_proceed(update *tgbotapi.Update) {
@@ -168,21 +171,45 @@ func get_ref(update *tgbotapi.Update) {
 		return
 	}
 	filter := bson.M{"ref": bson.M{"$nin": user.Refs_was}}
-	var ref ref_struct
-	err = db_refs.FindOne(context.TODO(), filter).Decode(&ref)
+
+	cnt, err := db_refs.CountDocuments(context.TODO(), filter)
 	if err != nil {
-		if err.Error() == "mongo: no documents in result" {
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Нет ссылки, которую вам возможно выдать, попробуй позже")
-			if _, err := bot.Send(msg); err != nil {
-				users_status[id] = []int64{}
-				errorLog.Println(err)
-				return
-			}
-			return
-		} else {
+		proceed_err(update, err)
+		return
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	if cnt <= 0 {
+		cnt = 1
+	}
+	var skip int64 = rand.Int63n(cnt)
+
+	opt := options.FindOptions{Skip: &skip}
+
+	var ref ref_struct
+	cur, err := db_refs.Find(context.TODO(), filter, &opt)
+	if err != nil {
+		proceed_err(update, err)
+		return
+	}
+	ref_exist := false
+	for cur.Next(context.TODO()) {
+		err = cur.Decode(&ref)
+		if err != nil {
 			proceed_err(update, err)
 			return
 		}
+		ref_exist = true
+		break
+	}
+	if ref_exist == false {
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Нет ссылки, которую вам возможно выдать, попробуй позже")
+		if _, err := bot.Send(msg); err != nil {
+			users_status[id] = []int64{}
+			errorLog.Println(err)
+			return
+		}
+		return
 	}
 	_, err = db_users.UpdateOne(context.TODO(), bson.M{"id": ref.From}, bson.M{"$inc": bson.M{"balance": 1}})
 

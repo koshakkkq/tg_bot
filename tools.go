@@ -61,6 +61,7 @@ func db_conn() {
 	db_admins = db_client.Database("tg_bot").Collection("admins")
 	db_waiting = db_client.Database("tg_bot").Collection("waiting")
 	db_whitelist = db_client.Database("tg_bot").Collection("whitelist")
+	db_mailing = db_client.Database("tg_bot").Collection("mailing")
 }
 
 func proceed_err(update *tgbotapi.Update, err error) {
@@ -86,6 +87,7 @@ func create_admin() admin.Admin {
 		Bot:            bot,
 		Db_whitelist:   db_whitelist,
 		Db_waiting:     db_waiting,
+		Db_mailing:     db_mailing,
 	}
 	a.Load_Admin_keybords()
 	return a
