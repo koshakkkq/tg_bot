@@ -1,6 +1,0 @@
-ERROR	2022/08/22 03:27:33 rooms.go:74: Bad Request: message text is empty
-ERROR	2022/08/22 04:03:45 rooms.go:131: Bad Request: message text is empty
-ERROR	2022/08/22 04:21:54 rooms.go:131: Bad Request: message text is empty
-ERROR	2022/08/22 23:11:25 rooms.go:147: Bad Request: message text is empty
-ERROR	2022/08/22 23:48:34 rooms.go:76: Bad Request: message text is empty
-ERROR	2022/08/22 23:48:41 rooms.go:76: Bad Request: message text is empty
